@@ -1,6 +1,7 @@
 import * as Joi from 'joi';
 import { JoiSchema } from 'nestjs-joi';
 import { User } from 'src/modules/infrastructure/user/entities/user.entity';
+import { Category } from '../../category/entities/category.entity';
 
 export class UpdateTodoItemDto {
   @JoiSchema(['UPDATE'], Joi.string().optional())
@@ -11,6 +12,9 @@ export class UpdateTodoItemDto {
 
   @JoiSchema(['UPDATE'], Joi.boolean().optional())
   status: boolean;
+
+  @JoiSchema(['UPDATE'], Joi.string().uuid().optional())
+  categoryId: string;
 
   @JoiSchema(['UPDATE'], Joi.forbidden())
   createdBy: User;
