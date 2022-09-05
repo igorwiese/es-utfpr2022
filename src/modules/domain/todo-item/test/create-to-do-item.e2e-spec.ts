@@ -53,10 +53,8 @@ beforeAll(async () => {
 
   const postCategory1 = await appRequest
     .post('/category/create')
-    .set('Autorization', `Bearer ${token1}` )
-    .send({ 
-      title: 'Category 1', })
-      .expect(201);
+    .set('Authorization', `Bearer ${token1}` )
+    .send({name: 'Category 1'},).expect(201);
   categoryId = postCategory1.body.id;
 });
 
@@ -98,4 +96,17 @@ describe('Create To-Do Items', () => {
       .set('Authorization', `Bearer ${token1}`)
       .expect(201);
   });
+
+  it('/create (POST) - Fail (random string at CategoryId', async () => {
+    await appRequest
+      .post('/todo-item/create')
+      .send({
+        title: 'test',
+        description: 'test',
+        categoryId: 'categoryId',
+      })
+      .set('Authorization', `Bearer ${token1}`)
+      .expect(400);
+  });
+
 });
